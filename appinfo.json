@@ -3,34 +3,29 @@
     "capabilities": [
         ""
     ],
-    "companyName": "Ben Ben",
+    "companyName": "Stephan Ebert",
     "longName": "Day and Night Earth Watchface",
     "projectType": "native",
     "resources": {
         "media": [
             {
-                "file": "images/preview_earth_daymap (6) (2).png",
-                "name": "DAY_PBL_V10",
-                "type": "png"
-            },
-            {
-                "file": "images/preview_earth_daymap (3).png",
-                "name": "DAY_PBL_V6",
-                "type": "png"
-            },
-            {
-                "file": "images/earthlights_dmsp.png",
-                "name": "NIGHT_PBLv5",
-                "type": "png"
-            },
-            {
                 "file": "images/preview_earth_daymap.png",
-                "name": "DAY_PBL_V5",
+                "name": "DAYMAP_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/NIGHT_PBL.png",
+                "name": "NIGHTMAP_COLOR",
+                "type": "png"
+            },
+            {
+                "file": "images/NIGHT_PBLv2.png",
+                "name": "NIGHT_PBLv2",
                 "type": "png"
             },
             {
                 "file": "images/world.png",
-                "name": "WORLD",
+                "name": "MAP_BW",
                 "type": "png"
             },
             {
@@ -39,23 +34,8 @@
                 "type": "png"
             },
             {
-                "file": "images/NIGHT_PBL.png",
-                "name": "NIGHT_PBL",
-                "type": "png"
-            },
-            {
-                "file": "images/worldCLR.png",
-                "name": "SIMPLE_DAY",
-                "type": "png"
-            },
-            {
-                "file": "images/converted.png",
-                "name": "CLR64",
-                "type": "png"
-            },
-            {
-                "file": "images/NIGHT_PBLv2.png",
-                "name": "NIGHT_PBLv2",
+                "file": "images/earthlights_dmsp.png",
+                "name": "NIGHT_PBLv5",
                 "type": "png"
             }
         ]
@@ -63,11 +43,10 @@
     "sdkVersion": "3",
     "shortName": "Day Night",
     "targetPlatforms": [
-        "aplite",
         "basalt"
     ],
-    "uuid": "b0f886d8-0089-4a48-b79d-5bdc67803b91",
-    "versionLabel": "2",
+    "uuid": "74d119cc-ce75-4f17-8a6d-dad54780cb52",
+    "versionLabel": "2.1",
     "watchapp": {
         "watchface": true
     }
