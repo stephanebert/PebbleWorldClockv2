@@ -5,13 +5,12 @@
 // http://codecorner.galanter.net/2015/04/03/simplify-access-to-framebuffer-on-pebble-time/
 
 #define STR_SIZE 20
-#define TIME_OFFSET_PERSIST 1
 #define REDRAW_INTERVAL 15
 
 static Window *window;
 static TextLayer *time_text_layer;
-static TextLayer *zone1_text_layer; //Ben Added
-static TextLayer *zone0_text_layer; //Ben Added
+static TextLayer *zone1_text_layer;
+static TextLayer *zone0_text_layer;
 static TextLayer *date_text_layer;
 static TextLayer *s_battery_layer;
 
@@ -62,23 +61,31 @@ static void draw_watch(struct Layer *layer, GContext *ctx) {
   int sun_y = -sin_lookup(year_frac * TRIG_MAX_ANGLE) * 23.44/90 * 0.25;
   
   
-  // ##### draw the bitmap
   int x, y;
 
-  static GBitmap *bb;
-  bb = gbitmap_create_with_resource(RESOURCE_ID_NIGHT_PBLv2);
+  #ifdef PBL_COLOR
+    static GBitmap *bb;
+    bb = gbitmap_create_with_resource(RESOURCE_ID_NIGHT_PBLv2);
+  #endif
 
-  GBitmap *fb = graphics_capture_frame_buffer_format(ctx, GBitmapFormat8Bit);
-  uint8_t *fb_data = gbitmap_get_data(fb);  
+  #ifdef PBL_COLOR
+    GBitmap *fb = graphics_capture_frame_buffer_format(ctx, GBitmapFormat8Bit);
+  #else
+    GBitmap *fb = graphics_capture_frame_buffer(ctx);
+  #endif
+    uint8_t *fb_data = gbitmap_get_data(fb);  
 
-  uint8_t *background_data = gbitmap_get_data(bb); 
   #define WINDOW_WIDTH 144 
-    uint8_t (*fb_matrix)[WINDOW_WIDTH] = (uint8_t (*)[WINDOW_WIDTH]) fb_data;
-  uint8_t (*background_matrix)[WINDOW_WIDTH] = (uint8_t (*)[WINDOW_WIDTH]) background_data;
+  #ifdef PBL_COLOR
+    uint8_t *background_data = gbitmap_get_data(bb); 
+    uint8_t (*background_matrix)[WINDOW_WIDTH] = (uint8_t (*)[WINDOW_WIDTH]) background_data;
+  #endif
+  uint8_t (*fb_matrix)[WINDOW_WIDTH] = (uint8_t (*)[WINDOW_WIDTH]) fb_data;
 
   for(x = 0; x < 144; x++) {
     int x_angle = (int)((float)TRIG_MAX_ANGLE * (float)x / (float)(144));
     for(y = 0; y < 72; y++) {
+//       APP_LOG(APP_LOG_LEVEL_DEBUG, "y=%d", y);
       int y_angle = (int)((float)TRIG_MAX_ANGLE * (float)y / (float)(72 * 2)) - TRIG_MAX_ANGLE/4;
       // spherical law of cosines
       float angle = ((float)sin_lookup(sun_y)/(float)TRIG_MAX_RATIO) * ((float)sin_lookup(y_angle)/(float)TRIG_MAX_RATIO);
@@ -87,13 +94,21 @@ static void draw_watch(struct Layer *layer, GContext *ctx) {
         // white pixel
       } else {
         // black pixel
-        fb_matrix[y+47][x] = background_matrix[y][x];
+        #ifdef PBL_COLOR
+          fb_matrix[y+47][x] = background_matrix[y][x];
+        #else
+          int byte = x/8;
+          int bit = x%8;
+          uint8_t *addr = fb_data + 20 * (y+47) + byte;
+          *addr = *addr^(1 << bit);
+        #endif
       }
     }
   }
   graphics_release_frame_buffer(ctx,fb);
-  gbitmap_destroy(bb);
-  //}
+  #ifdef PBL_COLOR
+    gbitmap_destroy(bb);
+  #endif
 }
 
 static void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
@@ -204,7 +219,7 @@ static void window_load(Window *window) {
   text_layer_set_text_alignment(zone0_text_layer, GTextAlignmentCenter);
   layer_add_child(window_layer, text_layer_get_layer(zone0_text_layer));  
 
-  //JAPAN
+  //zone 1
   zone1_text_layer = text_layer_create(GRect(72, 140, 144-72, 168-140));
   text_layer_set_background_color(zone1_text_layer, GColorClear );
   text_layer_set_text_color(zone1_text_layer, GColorWhite);
@@ -258,9 +273,9 @@ static void init(void) {
   init_offset();
 
   #ifdef PBL_PLATFORM_APLITE 
-    world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_WORLD);
+    world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_MAP_BW);
   #else 
-    world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_DAYMAP_COLOR);//v6 darkerDAY_PBL);  //SIMPLE_DAY);//
+    world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_DAYMAP_COLOR);
     //world_NIGHT_bitmap = gbitmap_create_with_resource(RESOURCE_ID_NIGHT_PBL); // DO THIS ABOVE IN OTHER ROUTINE
   #endif
 

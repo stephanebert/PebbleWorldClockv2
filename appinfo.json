@@ -9,6 +9,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/world_night.png",
+                "name": "MAP_BW_NIGHT",
+                "type": "png"
+            },
+            {
                 "file": "images/preview_earth_daymap.png",
                 "name": "DAYMAP_COLOR",
                 "type": "png"
@@ -43,6 +48,7 @@
     "sdkVersion": "3",
     "shortName": "Day Night",
     "targetPlatforms": [
+        "aplite",
         "basalt"
     ],
     "uuid": "74d119cc-ce75-4f17-8a6d-dad54780cb52",

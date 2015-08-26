@@ -1,5 +1,8 @@
 #include <pebble.h>
 #include "applite_utc.h"
+  
+  
+#define TIME_OFFSET_PERSIST 1
 
   
 // wrapper for time to return correct time since epoch
@@ -12,15 +15,16 @@ time_t unixTime(){
   #endif
 }
 
-void set_offset(time_t time){
+void set_offset(time_t phone_time){
   #ifdef PBL_PLATFORM_APLITE
-    time_offset = time - time(NULL);
+    time_offset = phone_time - time(NULL);
     status_t s = persist_write_int(TIME_OFFSET_PERSIST, time_offset); 
     if (s) {
       APP_LOG(APP_LOG_LEVEL_DEBUG, "Saved time offset %d with status %d", time_offset, (int) s);
     } else {
       APP_LOG(APP_LOG_LEVEL_DEBUG, "Failed to save time offset with status %d", (int) s);
     }
+//     layer_mark_dirty(canvas);
   #endif
 }
 
