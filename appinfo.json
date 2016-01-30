@@ -1,7 +1,7 @@
 {
     "appKeys": {},
     "capabilities": [
-        ""
+        "configurable"
     ],
     "companyName": "Stephan Ebert",
     "longName": "Day and Night Earth Watchface",
@@ -9,46 +9,117 @@
     "resources": {
         "media": [
             {
+                "file": "images/world12.png",
+                "name": "WORLD_12",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world11.png",
+                "name": "WORLD_11",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world10.png",
+                "name": "WORLD_10",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world09.png",
+                "name": "WORLD_09",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world08.png",
+                "name": "WORLD_08",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world07.png",
+                "name": "WORLD_07",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world06.png",
+                "name": "WORLD_06",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world05.png",
+                "name": "WORLD_05",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world04.png",
+                "name": "WORLD_04",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world03.png",
+                "name": "WORLD_03",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world02.png",
+                "name": "WORLD_02",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
+                "file": "images/world01.png",
+                "name": "WORLD_01",
+                "targetPlatforms": null,
+                "type": "bitmap"
+            },
+            {
                 "file": "images/world_night.png",
                 "name": "MAP_BW_NIGHT",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/preview_earth_daymap.png",
                 "name": "DAYMAP_COLOR",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/NIGHT_PBL.png",
                 "name": "NIGHTMAP_COLOR",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/NIGHT_PBLv2.png",
                 "name": "NIGHT_PBLv2",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/world.png",
                 "name": "MAP_BW",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/DAY_PBL.png",
                 "name": "DAY_PBL",
-                "type": "png"
+                "type": "bitmap"
             },
             {
                 "file": "images/earthlights_dmsp.png",
                 "name": "NIGHT_PBLv5",
-                "type": "png"
+                "type": "bitmap"
             }
         ]
     },
     "sdkVersion": "3",
     "shortName": "Day Night",
     "targetPlatforms": [
-        "aplite",
         "basalt"
     ],
     "uuid": "74d119cc-ce75-4f17-8a6d-dad54780cb52",

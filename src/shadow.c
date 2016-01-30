@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "applite_utc.h"
 
-// go here to confirm image http://www.timeanddate.com/worldclock/sunearth.html
+// go here to confirm image https://www.timeanddate.com/worldclock/sunearth.html
 // http://codecorner.galanter.net/2015/04/03/simplify-access-to-framebuffer-on-pebble-time/
 
 #define STR_SIZE 20
@@ -23,11 +23,28 @@ static Layer *canvas;
 #endif
 static int redraw_counter;
 char *s;
+int prev_month;
 
 #ifdef PBL_PLATFORM_APLITE
   int time_offset;
 #endif
-  
+
+#ifdef PBL_COLOR
+  int monthMaps[] = {
+    RESOURCE_ID_WORLD_01,
+    RESOURCE_ID_WORLD_02,
+    RESOURCE_ID_WORLD_03,
+    RESOURCE_ID_WORLD_04,
+    RESOURCE_ID_WORLD_05,
+    RESOURCE_ID_WORLD_06,
+    RESOURCE_ID_WORLD_07,
+    RESOURCE_ID_WORLD_08,
+    RESOURCE_ID_WORLD_09,
+    RESOURCE_ID_WORLD_10,
+    RESOURCE_ID_WORLD_11,
+    RESOURCE_ID_WORLD_12};
+#endif
+
 // timezone offsets, seconds
 static int offset0 = 0; // UTC
 static int offset1 = 8 * 3600; // China
@@ -161,6 +178,14 @@ static void handle_minute_tick(struct tm *tick_time, TimeUnits units_changed) {
     strftime(zone_text_1, sizeof(zone_text_1), "%I:%M%P", zonetime_1);
   }
   text_layer_set_text(zone1_text_layer, zone_text_1);
+  
+  #ifdef PBL_COLOR
+  if(tick_time->tm_mon != prev_month){
+    prev_month = tick_time->tm_mon;
+    gbitmap_destroy(world_bitmap);
+    world_bitmap = gbitmap_create_with_resource(monthMaps[tick_time->tm_mon]);
+  }
+  #endif
 
   redraw_counter++;
   if (redraw_counter >= REDRAW_INTERVAL) {
@@ -276,6 +301,7 @@ static void init(void) {
     world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_MAP_BW);
   #else 
     world_bitmap = gbitmap_create_with_resource(RESOURCE_ID_DAYMAP_COLOR);
+    prev_month = -1;
     //world_NIGHT_bitmap = gbitmap_create_with_resource(RESOURCE_ID_NIGHT_PBL); // DO THIS ABOVE IN OTHER ROUTINE
   #endif
 
